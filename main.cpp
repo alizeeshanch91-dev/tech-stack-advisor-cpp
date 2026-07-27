@@ -9,16 +9,16 @@ struct techstack
     int score;
 };
 techstack tech[10] = {
-    {"web frontend","uilding visual, interactive interfaces (React/JS)",0},
+    {"web frontend","building visual, interactive interfaces (React/JS)",0},
     {"web backend","server logic, APIs, and databases (Node/Express or similar)",0},
     {"mobile development","apps for phones",0},
     {"data science","extracting insight from data",0},
     {"machine learning/ AI","building predictive model and intelligent systems",0},
-    {"game development","building interactive games and simultations",0},
-    {"systems / embadded programming","low level,hardware-close code",0},
+    {"game development","building interactive games and simulations",0},
+    {"systems / embedded programming","low level,hardware-close code",0},
     {"clouds/ devops","deploying,scaling, and automating infrastructure",0},
     {"cybersecurity","finding and fixing vulnerabilities,securing systems",0},
-    {"blockchain/web3","decentralized apps ad smart contracts",0}
+    {"blockchain/web3","decentralized apps and smart contracts",0}
 };
 struct questions
 {
@@ -28,12 +28,12 @@ struct questions
 };
 questions q[10]={
     {
-    "Q1: What excites you most about building something?",
-    "a) Making something people directly see and interact with",
-    "b) Making a system that scales to millions of users behind the scenes",
-    "c) Making a system that learns and improves from data",
-    "d) Making something people can hold and play",
-    0, 7, 4, 5   // 0=Web Frontend, 7=Cloud/DevOps, 4=ML/AI, 5=Game Dev
+        "Q1: What excites you most about building something?",
+        "a) Making something people directly see and interact with",
+        "b) Making a system that scales to millions of users behind the scenes",
+        "c) Making a system that learns and improves from data",
+        "d) Making something people can hold and play",
+        0, 7, 4, 5   // 0=Web Frontend, 7=Cloud/DevOps, 4=ML/AI, 5=Game Dev
     },
     {
         "Q2: Which problem sounds most interesting to solve?",
@@ -107,4 +107,71 @@ questions q[10]={
         "d) I want to store it in a decentralized, tamper-proof way",
         3, 4, 8, 9   // 3=Data Science, 4=ML/AI, 8=Cybersecurity, 9=Blockchain
     }
+};
+int main()
+{
+    for(int i = 0;i < 10;i++)
+    {
+        cout << q[i].question << endl;
+        cout << q[i].option_1 << endl;
+        cout << q[i].option_2 << endl;
+        cout << q[i].option_3 << endl;
+        cout << q[i].option_4 << endl;
+
+        int choice;
+        do
+        {
+            cout << "enter the choice (1/2/3/4): ";
+            cin >> choice;
+            if(choice < 1 || choice > 4)
+            {
+                cout << "invalid input! enter again" << endl;
+            }
+        } while (choice < 1 || choice > 4);
+        
+        
+
+        int targetIndex;
+        if (choice == 1) targetIndex = q[i].target_1;
+        else if (choice == 2) targetIndex = q[i].target_2;
+        else if (choice == 3) targetIndex = q[i].target_3;
+        else if (choice == 4) targetIndex = q[i].target_4;
+
+        tech[targetIndex].score++;
+        system("pause");
+        system("cls");
+    }
+    int firsthighest = -1, secondhighest = -1, thirdhighest = -1;
+    for(int i = 0;i < 10;i++)
+    {
+        if (firsthighest == -1 || tech[i].score > tech[firsthighest].score)
+        {
+            thirdhighest = secondhighest;
+            secondhighest = firsthighest;
+            firsthighest = i;
+        }
+        else if (secondhighest == -1 || tech[i].score > tech[secondhighest].score)
+        {
+            thirdhighest = secondhighest;
+            secondhighest = i;
+        }
+        else if (thirdhighest == -1 || tech[i].score > tech[thirdhighest].score)
+        {
+            thirdhighest = i;
+        }
+    }
+    cout << "===============report===============" << endl;
+    cout << "top recommendation : " << tech[firsthighest].name <<endl;
+    cout << tech[firsthighest].description<< endl << endl;
+    if (secondhighest != -1)
+    {
+    cout << "2nd recommendation : " << tech[secondhighest].name << endl;
+    cout << tech[secondhighest].description << endl << endl;
+    }
+    if (thirdhighest != -1)
+    {
+    cout << "3rd recommendation : " << tech[thirdhighest].name << endl;
+    cout << tech[thirdhighest].description << endl;
+    }
+    return 0;
 };
