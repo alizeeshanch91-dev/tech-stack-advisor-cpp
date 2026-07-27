@@ -1,5 +1,5 @@
 #include<iostream>
-
+#include<fstream>
 using namespace std;
 
 struct techstack
@@ -110,6 +110,12 @@ questions q[10]={
 };
 int main()
 {
+    ofstream logFile("results_log.csv", ios::app);
+    cout << "enter your name : ";
+    string name;
+    cin.ignore();
+    getline(cin, name);
+    logFile << name << ",";
     for(int i = 0;i < 10;i++)
     {
         cout << q[i].question << endl;
@@ -173,5 +179,10 @@ int main()
     cout << "3rd recommendation : " << tech[thirdhighest].name << endl;
     cout << tech[thirdhighest].description << endl;
     }
+    logFile << tech[firsthighest].name;
+    if (secondhighest != -1) logFile << "," << tech[secondhighest].name;
+    if (thirdhighest != -1) logFile << "," << tech[thirdhighest].name;
+    logFile << endl;
+    logFile.close();
     return 0;
 };
